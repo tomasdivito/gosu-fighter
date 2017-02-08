@@ -3,7 +3,7 @@ require './app/map'
 require './app/player'
 require './app/scope'
 require './app/enemy'
-require './app/lifes_counter'
+require './app/lives_counter'
 
 # Handles the game loop.
 class Game
@@ -12,7 +12,7 @@ class Game
     @map = Map.new
     @scope = Scope.new
     @bullets = BulletList.new
-    @lifes_counter = LifesCounter.new(@player)
+    @lives_counter = LivesCounter.new(@player)
 
     @frames = 0
     @difficulty = 0
@@ -42,7 +42,7 @@ class Game
     @map.draw
     @scope.draw
     @bullets.draw
-    @lifes_counter.draw
+    @lives_counter.draw
   end
 
   def button_down(button)

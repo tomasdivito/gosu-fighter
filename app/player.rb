@@ -2,10 +2,11 @@ require 'matrix'
 
 require "./app/sprites"
 require './app/bullets/linear_bullet.rb'
+require './app/gameover' # in order for the gameover screen to appear
 
 # The game player character.
 class Player
-  attr_reader :lifes
+  attr_reader :lives
 
   WIDTH = 30
   HEIGHT = 25
@@ -19,7 +20,7 @@ class Player
 
   DEFAULT_COLOR = 0xff_ffffff
 
-  STARTING_LIFES = 5
+  STARTING_LIVES = 5
 
   def initialize
     @sprite = Sprites::PLAYER
@@ -29,7 +30,7 @@ class Player
     @color = DEFAULT_COLOR
     @immunity_frame = 0
 
-    @lifes = STARTING_LIFES
+    @lives = STARTING_LIVES
 
     @speed = STARTING_SPEED
 
@@ -44,14 +45,18 @@ class Player
 
   def remove_life!
     if @state != :immune
-      @lifes -= 1
-      die! if @lifes == 0
+      @lives -= 1
+      die! if @lives == 0
       @state = :immune
     end
   end
 
   def die!
-    @state = :dead
+    Global.instance.window.state = GameOver.new
+  end
+
+  def lives
+    return @lives.to_s
   end
 
   def fire!(x, y)
@@ -61,8 +66,6 @@ class Player
 
   def update
     case @state
-    when :dead
-      @color -= 100 if @color > 0
     when :alive
       move
     when :immune
