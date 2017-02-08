@@ -24,7 +24,6 @@ class Game
     @scope.update
     @bullets.update
     if @map.colliding? @player then
-      @map.stop_moving!
       @player.remove_life!
     end
     @bullets.delete_if do |bullet|

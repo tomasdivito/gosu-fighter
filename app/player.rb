@@ -67,6 +67,7 @@ class Player
   def update
     case @state
     when :alive
+      @color = DEFAULT_COLOR
       move
     when :immune
       move
